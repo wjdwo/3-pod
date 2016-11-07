@@ -1,0 +1,25 @@
+[listVirtualMachines]
+[checkVirtualMachineName]
+[deployVirtualMachine] * 
+[destroyVirtualMachine] * 
+[rebootVirtualMachine] * 
+[stopVirtualMachine] *
+[startVirtualMachine] *
+[resetPasswordForVirtualMachine] *
+[listVolumes]
+[createVolume] *
+[deleteVolume] 
+[attachVolume] *
+[detachVolume] *
+[listPublicIpAddresses]
+[associateIpAddress] *
+[disassociateIpAddress] *
+[createPortForwardingRule] *
+[deletePortForwardingRule] *
+[listPortForwardingRules]
+[createFirewallRule] *
+[deleteFirewallRule] *
+[listFirewallRules]
+
+[addNicToVirtualMachine] *
+[removeNicFromVirtualMachine] *
