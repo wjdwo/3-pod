@@ -27,6 +27,35 @@ function CustomAlert(){
 }
 var Alert = new CustomAlert();
 
+function CustomAlert2(){
+    var result;
+    this.render = function(head,dialog,foot){
+        result = false;
+        var winW = window.innerWidth;
+        var winH = window.innerHeight;
+        var dialogoverlay = document.getElementById('dialogoverlay2');
+        var dialogbox = document.getElementById('dialogbox2');
+        dialogoverlay.style.display = "block";
+        dialogoverlay.style.height = winH+"px";
+        dialogbox.style.left = (winW/2) - (550 * .5)+"px";
+        dialogbox.style.top = "100px";
+        dialogbox.style.display = "block";
+        document.getElementById('dialogboxhead2').innerHTML = head;
+        document.getElementById('dialogboxbody2').innerHTML = dialog;
+        if(foot=='default'){
+            document.getElementById('dialogboxfoot2').innerHTML = '<button class="button2" onclick="Alert2.ok()">OK</button>';
+        } else {
+            document.getElementById('dialogboxfoot2').innerHTML = foot;
+        }
+
+    }
+    this.ok = function(){
+        document.getElementById('dialogbox2').style.display = "none";
+        document.getElementById('dialogoverlay2').style.display = "none";
+    }
+}
+var Alert2 = new CustomAlert2();
+
 function deletePost(id){
     var db_id = id.replace("post_", "");
     // Run Ajax request here to delete post from database

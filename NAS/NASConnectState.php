@@ -7,7 +7,7 @@ include_once($server_root_path.'/'.CLOUD_PATH.'pageInclude/ajaxCalledPageInclude
 
 <tr class="background_gray">
   <td style="text-align: left" colspan='3'><b><?=$_POST['displaytext']?></b> </td>
-  <td style="text-align: right"><div id="serverStateClose" onclick="stateClose()">X </div></td>
+  <td style="text-align: right"><div id="serverStateClose" onclick="stateClose('NASList')">X </div></td>
 </tr>
 <?php
 function isVMConnected($CIP_id, $vm_nic) {

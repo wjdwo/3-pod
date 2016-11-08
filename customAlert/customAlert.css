@@ -14,13 +14,36 @@
 	background: #000;
 	border-radius:7px; 
 	width:550px;
-	z-index: 500;
+	z-index: 512;
 }
 #dialogbox > div{ background:#FFF; margin:0px; }
 #dialogbox > div > #dialogboxhead{ background: #cc0202; font-size:19px; padding:10px; color:white; }
 #dialogbox > div > #dialogboxbody{ background:white; padding:20px; color:#0F0F0F; }
 #dialogbox > div > #dialogboxfoot{ background: #cc0202; padding:10px; text-align:right; }
 
+/* customalert2*/
+#dialogoverlay2{
+   display: none;
+   opacity: .8;
+   position: fixed;
+   top: 0px;
+   left: 0px;
+   background: #FFF;
+   width: 100%;
+   z-index: 500;
+}
+#dialogbox2{
+   display: none;
+   position: fixed;
+   background: #000;
+   border-radius:7px; 
+   width:550px;
+   z-index: 1024;
+}
+#dialogbox2 > div{ background:#FFF; margin:0px; }
+#dialogbox2 > div > #dialogboxhead2{ background: #cc0202; font-size:19px; padding:10px; color:white; }
+#dialogbox2 > div > #dialogboxbody2{ background:white; padding:20px; color:#0F0F0F; }
+#dialogbox2 > div > #dialogboxfoot2{ background: #cc0202; padding:10px; text-align:right; }
 
 .button {
    border: 1px solid #cc0202;

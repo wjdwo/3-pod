@@ -35,7 +35,7 @@ if($result['success']=="true"){
 	echo "<script>Confirm.render('Volume','삭제 신청이 완료 되었습니다',loca,'','no')</script>";
 
 } else {
-	echo "<script>Confirm.render('Volume','오류가 발생했습니다!',err_info,'','no')</script>";
+	echo "<script>Confirm.render('Volume','오류가 발생했습니다!',loca,'','no')</script>";
 }
 ?>
 </body>

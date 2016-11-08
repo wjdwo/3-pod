@@ -68,6 +68,11 @@ for($i=0; $i<$num; $i++){
 </table>
 
 <table  class="gray_line_top_bottom">
+<tbody style="display: none" id = "stateViewer">
+</tbody>
+</table>
+
+<table  class="gray_line_top_bottom">
 <tbody style="display: none" id = "viewer">
 </tbody>
 </table>

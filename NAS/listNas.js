@@ -40,9 +40,7 @@ function resizeSubmit(){
 	form.submit();
 }
 
-function stateClose(){
-  document.getElementById('NASState').style.display="none";
-}
+
 function listClose(){
   document.getElementById('NASList').style.display="none";
 }
@@ -86,7 +84,7 @@ function showNASState(t){
 }
 
 function showNASList(t){
-  stateClose();
+  stateClose('NASState');
   var postVal = t;
   var xhr = new XMLHttpRequest();
   xhr.open('POST','NASList.php');
@@ -104,7 +102,7 @@ function showNASList(t){
 }
 
 function showNasConnectState(num){
-   stateClose();
+   stateClose('NASState');
     var postVal = document.forms[num];
     var xhr = new XMLHttpRequest();
     xhr.open('POST','NASConnectState.php');
@@ -124,7 +122,7 @@ function showNasConnectState(num){
 
 
 function showNasConnect(num){
-   stateClose();
+   stateClose('NASState');
     var postVal = document.forms[num];
     var xhr = new XMLHttpRequest();
     xhr.open('POST','NASConnect.php');

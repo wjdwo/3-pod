@@ -38,7 +38,7 @@ $URL_NAS ="https://api.ucloudbiz.olleh.com/nas/v1/client/api?";
 if($result['status']=='error') {
   echo "<script>Confirm.render('NAS','".$result['errortext']."',err_info,'','no')</script>";
   exit;
- 
+} 
 
 echo "<script>Confirm.render('NAS','삭제 신청이 완료 되었습니다.',loca,'','no')</script>";
 

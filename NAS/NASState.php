@@ -20,7 +20,7 @@ $temp = $result['response'];
 ?>
 <tr class="background_gray">
   <td style="text-align: left" colspan='6'><b><?=$_POST['name']?></b> </td>
-  <td style="text-align: right"><div id="serverStateClose" onclick="stateClose()">X </div></td>
+  <td style="text-align: right"><div id="serverStateClose" onclick="stateClose('NASState')">X </div></td>
 </tr>
 <tr>
 

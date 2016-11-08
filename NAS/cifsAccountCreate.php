@@ -10,7 +10,7 @@
    location.replace('cifsAccount.php');
   }
   var err_info = function(){
-    history.back();
+   location.replace('cifsAccount.php');
   }
 </script>
 <style>

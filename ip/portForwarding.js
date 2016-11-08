@@ -1,10 +1,10 @@
-  function stateClose(){
-    document.getElementById('viewer').style.display="none";
-  }
+
 
   function portForwarding(num){
+    stateClose('viewer');
+    document.getElementById('stateViewer').innerHTML = '';
     num = parseInt(num);
-    document.getElementById('viewer').style.display="table-row-group";
+    document.getElementById('stateViewer').style.display="table-row-group";
     var ipaddressid = document.forms[num].ipaddressid.value;
     var ipadrressname = document.forms[num].ipaddress.value;
     var xhr = new XMLHttpRequest();
@@ -15,12 +15,14 @@
     xhr.send(data);
     xhr.onreadystatechange = function(){
       if(xhr.readyState === 4 && xhr.status === 200) {
-        document.getElementById('viewer').innerHTML = xhr.responseText; 
+        document.getElementById('stateViewer').innerHTML = xhr.responseText; 
       }
     }
   }
 
   function addPortForwarding(num){
+    stateClose('stateViewer');
+    document.getElementById('viewer').innerHTML = '';
     num = parseInt(num);
     document.getElementById('viewer').style.display="table-row-group";
     var ipaddressid = document.forms[num].ipaddressid.value;

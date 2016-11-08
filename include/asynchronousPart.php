@@ -42,7 +42,17 @@ $jobRank=$_POST['jobRank'];
       $_SESSION[$id] = $password;
       echo "password produce";
     }
-/*
+    if(isset($result2['jobresult']['virtualmachine']['displayname'])) {
+      echo "<displayname>".$result2['jobresult']['virtualmachine']['displayname']."<displayname>";
+    }
+    if(isset($result2['jobresult']['volume']['name'])) {
+      echo "<diskname>".$result2['jobresult']['volume']['name']."<diskname>";
+    }
+    /*
+    if(isset($result2['jobResult']['firewallrule']['protocol'])){
+      echo "<firewall>".$result2['jobResult']['firewallrule']['cidrlist']." : ".$result2['jobResult']['firewallrule']['protocol']." 시작 포트 (".$result2['jobResult']['firewallrule']['startport'].") 끝 포트(".$result2['jobResult']['firewallrule']['endport'].")";
+    }
+
     if(isset($result2['jobresult']['virtualmachine']['state'])){
       if($result2['jobresult']['virtualmachine']['state'] == "Destroyed") {
         echo VM_DESTROY;

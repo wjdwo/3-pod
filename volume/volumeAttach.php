@@ -31,7 +31,7 @@ $result = callCommand($URL, $cmdArr, SECERET_KEY);
 set_time_limit(6000);
 
 $jobId = $result["jobid"];
-
+echo $jobId;
 
 
 if(session_push('processID',$result['jobid'])){

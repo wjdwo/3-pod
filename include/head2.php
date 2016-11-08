@@ -60,9 +60,9 @@ include_once($server_root_path.'/'.CLOUD_PATH.'customAlert/customAlert.html');
 <div class="content">
   <script>
 
-  var doneConfirm = new Array();
-  function stateClose(){
-    document.getElementById('serverState').style.display="none";
+//  var doneConfirm = new Array();
+  function stateClose(id){
+    document.getElementById(id).style.display="none";
   }
   function renewPage(){
     var xhr = new XMLHttpRequest();
@@ -74,7 +74,7 @@ include_once($server_root_path.'/'.CLOUD_PATH.'customAlert/customAlert.html');
         document.querySelector('#myVM').innerHTML = xhr.responseText;
       }
     }
-    stateClose();
+    stateClose('serverState');
   }
     function testSeparate3(jobid, url ,num, time_id){
     var xhr = new XMLHttpRequest();
@@ -88,57 +88,95 @@ include_once($server_root_path.'/'.CLOUD_PATH.'customAlert/customAlert.html');
         var my_location = location.href;
 
         state.innerHTML=temp;
-      //  alert(temp);
-        doneConfirm[time_id] = new CustomAlert();
+
         if(temp.match('done')) {
           clearInterval(time_id);
         }
-        if(temp.match('DestroyVM') == 'DestroyVM') {
-        //  alert('vm destroy!'); 
-          head = 'Server'; body = ' 서버 삭제가 완료 되었습니다.';
+        if(temp.match('VM')) {
+          head = 'Server';
+          var res = temp.split('<displayname>');
+          body = res[1];
+        }
+        else if(temp.match('Volume')){
+          head = 'Volume';
+          var res = temp.split('<diskname>');
+          body = res[1];
+        }
+
+        if(temp.match('DestroyVM')){
+          head = 'Server'; body += ' 서버 삭제가 완료 되었습니다.';
           if(my_location.match('myServer.php') == 'myServer.php') {
-          //  sleep(3);
             renewPage();
           }
-        } else if(temp.match('StopVM') == 'StopVM') {
-          head = 'Server'; body = ' 서버 종료가 완료 되었습니다.';
-        } else if(temp.match('DeployVM') == 'DeployVM') {
-          head = 'Server'; body = ' 서버 생성이 완료 되었습니다.';
-        } else if(temp.match('RebootVM') == 'RebootVM') {
-          head = 'Server'; body = ' 서버 재시작이 완료 되었습니다.';
-        } else if(temp.match('StartVM') == 'StartVM') {
-          head = 'Server'; body = ' 서버 시작이 완료 되었습니다.';
-        } else if(temp.match('ResetVMPassword') == 'ResetVMPassword') {
-          head = 'Server'; body = ' 서버 비밀번호 재생성이 완료 되었습니다.';
+        } else if(temp.match('StopVM')) {
+          head = 'Server'; body += ' 종료가 완료 되었습니다.';
+        } else if(temp.match('DeployVM')) {
+          head = 'Server'; body += ' 생성이 완료 되었습니다.';
+        } else if(temp.match('RebootVM')) {
+          head = 'Server'; body += ' 재시작이 완료 되었습니다.';
+        } else if(temp.match('StartVM')) {
+          head = 'Server'; body += ' 시작이 완료 되었습니다.';
+        } else if(temp.match('ResetVMPassword')) {
+          head = 'Server'; body += ' 비밀번호 재생성이 완료 되었습니다.';
         }  // disk
-        else if(temp.match('CreateVolume') == 'CreateVolume') {
-          head = 'Volume'; body = ' Disk 생성이 완료 되었습니다.';
-        } else if(temp.match('AttachVolume') == 'AttachVolume') {
-          head = 'Volume'; body = ' Disk 와 서버 연결이 완료 되었습니다.';
-        } else if(temp.match('DetachVolume') == 'DetachVolume') {
-          head = 'Volume'; body = ' Disk 와 서버 연결 해제가 완료 되었습니다.';
+        else if(temp.match('CreateVolume')) {
+          head = 'Volume'; body += ' 생성이 완료 되었습니다.';
+        } else if(temp.match('AttachVolume')) {
+          head = 'Volume'; body += ' 와 서버 연결이 완료 되었습니다.';
+        } else if(temp.match('DetachVolume')) {
+          head = 'Volume'; body += ' 와 서버 연결 해제가 완료 되었습니다.';
         } //ip
-        else if(temp.match('AssociateIPAddr') == 'AssociateIPAddr') {
+        else if(temp.match('AssociateIPAddr')) {
           head = 'IP'; body = ' IP 생성이 완료 되었습니다.';
-        } else if(temp.match('DisassociateIPAddr') == 'DisassociateIPAddr') {
+        } else if(temp.match('DisassociateIPAddr')) {
           head = 'IP'; body = ' IP 삭제가 완료 되었습니다.';
         } //portForwarding
-        else if(temp.match('CreatePortForwardingRule') == 'CreatePortForwardingRule') {
+        else if(temp.match('CreatePortForwardingRule')) {
           head = 'Port Forwarding'; body = ' port forwarding 생성이 완료 되었습니다.';
-        } else if(temp.match('DeletePortForwardingRule') == 'DeletePortForwardingRule') {
+
+        } else if(temp.match('DeletePortForwardingRule')) {
           head = 'Port Forwarding'; body = ' port forwarding 삭제가 완료 되었습니다.';
         }  //firewall
-        else if(temp.match('CreateFirewallRule') == 'CreateFirewallRule') {
+        else if(temp.match('CreateFirewallRule')) {
           head = 'Fire Wall'; body = ' 방화벽 규칙 생성이 완료 되었습니다.';
-        } else if(temp.match('DeleteFirewallRule') == 'DeleteFirewallRule') {
+        } else if(temp.match('DeleteFirewallRule')) {
           head = 'Fire Wall'; body = ' 방화벽 규칙 삭제가 완료 되었습니다.';
         } 
-        if(temp.match('fail') == 'fail'){
+        else if (temp.match('AddNicToVM')) {
+          head = 'CIP'; body = 'CIP와 서버 연결이 완료 되었습니다.';
+        } else if (temp.match('RemoveNicFromVM')) {
+          head = 'CIP'; body = 'CIP와 서버 연결 해제가 완료 되었습니다.';
+        }
+        if(temp.match('fail')) {
           body = ' 오류가 발생했습니다.';
+        }
+
+
+        if (head.match('Port Forwarding')) {
+          if(my_location.match('listPublicIP.php')){
+            stateClose('stateViewer');
+          }
+        } else if(head.match('Fire Wall')) {
+          if(my_location.match('listFireWallRules.php')){
+            stateClose('stateViewer');
+          }
+        } else if(head.match('Server')) {
+          if(my_location.match('myServer.php')){
+            stateClose('serverState');
+          }
+        } else if(head.match('Volume')) {
+          if(my_location.match('listVolume.php')){
+            stateClose('diskState');
+          }
+        } else if(head.match('CIP')) {
+          if(my_location.match('listNAS.php')){
+            stateClose('NASList');
+            stateClose('NASState');
+          }
         }
         if(head != '') {
           state.innerHTML = body;
-          doneConfirm[time_id].render(head,body,'default');
+          Alert2.render(head, body, 'default');
         }
       }
     }

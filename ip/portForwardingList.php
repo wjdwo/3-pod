@@ -28,7 +28,7 @@ if(count($result)!=0){
    ?>
  
  <tr class="background_gray"><td style="text-align: left" colspan="4"><b><?=$_POST['ipaddress']?></b></td>
- <td style="text-align: right"><div onclick="stateClose()">X</div></td></tr>
+ <td style="text-align: right"><div onclick="stateClose('stateViewer')">X</div></td></tr>
  <tr  class="background_gray">
     <td style="width: 20%">서버</td>
     <td style="width: 20%">프로토콜</td>

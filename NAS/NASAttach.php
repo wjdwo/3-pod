@@ -38,8 +38,6 @@ if(session_push('processID',$result['jobid'])){
 }
 
 ?>
-<script src="asy.js">
-</script>
 <?php
     
 ?>

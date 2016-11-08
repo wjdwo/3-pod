@@ -40,7 +40,7 @@ for($i=0; $i<$result_num; $i++){
     
   
   </td>
-  <td style="border-left-style: hidden; text-align: right"><div id="serverStateClose" onclick="stateClose()">X </div></td>
+  <td style="border-left-style: hidden; text-align: right"><div id="serverStateClose" onclick="stateClose('diskState')">X </div></td>
 </tr>
 <tr class="background_gray">
   <td  style="width: 75%" colspan='3'><b>서버 연결</b></td>
@@ -56,13 +56,13 @@ for($i=0; $i<$result_num; $i++){
   <?=$temp['vmdisplayname']?> : <?=$temp['vmstate']?> 
   </td>
   <td style='width: 20%'> 
-    <form style="margin:0px;padding:0px;" method="post" action="volumeDetach.php">
+    <form style="margin:0px;padding:0px;" id="serverForm" method="post">
       <input type='hidden' name='id' value="<?=$temp['id']?>"/>
 <?php
       if(isset($temp['diskofferingname'])==false){
         echo "-";
       } else {
-        echo "<input type='submit' class='button2' value='연결끊기'/>";
+        echo "<input type='button' onclick='serverDettach()' class='button2' value='연결끊기'/>";
       }  
 ?>
       
@@ -87,7 +87,7 @@ for($i=0; $i<$result_num; $i++){
     "apikey" => API_KEY
 );
 $vmList = callCommand($URL, $listVMcmdArr, SECERET_KEY);
-var_dump_enter($vmList);
+//var_dump_enter($vmList);
 
 $vm_num = $vmList['count'];
 $vm = $vmList['virtualmachine'];
@@ -116,7 +116,7 @@ for($i=0; $i<$vm_num; $i++){
 }?>
 
 <td>
-<form style="margin:0px;padding:0px;" method="post" action="volumeDelete.php">
+<form style="margin:0px;padding:0px;" id='serverDeleteForm'>
 <input type='hidden' name='id' value='<?= $temp['id']?>'/>
 
 <?php
@@ -125,7 +125,7 @@ if(isset($temp['diskofferingname'])==false){
 }
 else if(strstr($temp['diskofferingname'],'additional')==true) {
   if(!isset($temp['vmstate']) ){
-    echo "<input type='submit' class='button' value='삭제하기'/> ";
+    echo "<input type='button' onclick='serverDelete()' class='button' value='삭제하기'/> ";
   } else {
     echo "<input type='button' class='button' value='VM 연결 해지를 해주세요.'/>";
   }

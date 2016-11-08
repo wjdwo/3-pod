@@ -9,7 +9,6 @@ function makeByteToGB(byte){
   byte = Number(byte);
   document.write( byte/1024/1024/1024 +"GB" );
 }
-
  var publicIp_length;
  function serverAttach(){
   var form = document.getElementById('serverForm');
@@ -17,7 +16,23 @@ function makeByteToGB(byte){
   form.action="volumeAttach.php";
   form.method = 'post';
   form.submit();
+  Alert.render('Volume','서버와의 연결 요청을 진행 하고 있습니다 잠시만 기다려 주세요. ','');
  }
+ function serverDettach(){
+  var form = document.getElementById('serverForm');
+  form.action="volumeDetach.php";
+  form.method = 'post';
+  form.submit();
+  Alert.render('Volume','서버와의 연결 끊기 요청을 진행 하고 있습니다 잠시만 기다려 주세요. ','');
+ }
+  function serverDelete(){
+    var form = document.getElementById('serverDeleteForm');
+    form.action="volumeDelete.php";
+    form.method = 'post';
+    form.submit();
+    Alert.render('Volume','삭제 요청을 진행 하고 있습니다 잠시만 기다려 주세요. ','');
+  }
+ 
  function showDiskState(num){
     var id = document.forms[num].ipaddressid.value;
     var xhr = new XMLHttpRequest();
@@ -32,6 +47,7 @@ function makeByteToGB(byte){
       }
     document.getElementById('diskState').style.display = 'table';
   }
+
 </script>
 </head><body>
 <?php
@@ -50,7 +66,6 @@ include_once($server_root_path.'/'.CLOUD_PATH.'pageInclude/menuPageInclude.php')
 
  $num = $result['count'];
  $result = $result['volume'];
-
 ?>
  <table class="noline hoverOn">
 
