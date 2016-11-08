@@ -41,19 +41,6 @@ function stateClose(){
   document.getElementById('serverState').style.display="none";
 }
 
- function isVMdeleted(processStart,processEnd){
-
-     var findStr = "<?php echo VM_DESTROY; ?>";
-      for(i=processStart; i<=processEnd ; i++) {
-        var message = document.getElementById('state'+i).innerHTML;
-        if (message.indexOf(findStr) != -1) {
-          return true; 
-        }else {   
-          return false; 
-        }
-    }
-}
-
 function viewPassword(t){
     var id = t.innerHTML+'_id';
     var view_id = t.innerHTML;
@@ -88,27 +75,4 @@ function viewPassword(t){
         }
       }
     document.getElementById('serverState').style.display = 'table';
-  }
-
-
-  var renewPage = function(){
-    span_start = 2;
-    span_end = 1;
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET','renewMyServer.php');
-    xhr.send();
-    xhr.onreadystatechange = function(){
-      if(xhr.readyState === 4 && xhr.status === 200) {
-        document.querySelector('#myVM').innerHTML = xhr.responseText;
-      }
-    }
-    stateClose();
-  }
-  
-  function renewMyServer(){
-    if(isVMdeleted(span_start,span_end) == true){      
-        Confirm.render('VM','삭제가 완료 되었습니다',renewPage,'','no');
-        
-     }
-
   }

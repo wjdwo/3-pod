@@ -19,7 +19,7 @@ include_once($server_root_path.'/'.CLOUD_PATH.'pageInclude/menuPageInclude.php')
 <script src='vm.js'></script>
 
 <table  class="noline hoverOn">
-<tbody id="myVM" onmouseover='renewMyServer()'>
+<tbody id="myVM" ><!--onmouseover='renewMyServer()'> -->
 <tr class="background_gray"><td>서버 명</td><td>지역</td><td>Core X RAM</td><td>OS</td><td>생성 일자</td></tr>
 <?php
 

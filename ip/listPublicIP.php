@@ -35,6 +35,7 @@ include_once($server_root_path.'/'.CLOUD_PATH.'pageInclude/menuPageInclude.php')
  $result = callCommand($URL, $cmdArr, SECERET_KEY);
  $num = $result['count'];
  $result = $result['publicipaddress'];
+// var_dump_enter($result);
 
 ?>
  <table class="noline hoverOn">
@@ -63,7 +64,7 @@ for($i=0; $i<$num; $i++){
   <td style="width:20%"><input type='button' class='button2' value='조회' onclick="portForwarding('<?=$i?>')"/></td>
   <td style="width:20%"><input type='button' class='button2' value='등록' onclick="addPortForwarding('<?=$i?>')"/></td>
   <?php
-    if(gettype($temp['usageplantype'])!="string") {
+    if($temp['issourcenat']=="true") {
       echo "<td><b>-</b></td>";
     } else {
     echo "<td><input type='submit' class='button' value='삭제'/></td>";

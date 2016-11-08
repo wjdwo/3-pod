@@ -55,54 +55,92 @@ include_once($server_root_path.'/'.CLOUD_PATH.'customAlert/customAlert.html');
 </div>
 
 <div class="css3droppanel" >
+<input type="checkbox" id="paneltoggle" />
+<label for="paneltoggle" title="Click to open Panel"></label>
 <div class="content">
   <script>
 
   var doneConfirm = new Array();
-
+  function stateClose(){
+    document.getElementById('serverState').style.display="none";
+  }
+  function renewPage(){
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET','renewMyServer.php');
+    xhr.send();
+    xhr.onreadystatechange = function(){
+      if(xhr.readyState === 4 && xhr.status === 200) {
+       // alert(xhr.responseText);
+        document.querySelector('#myVM').innerHTML = xhr.responseText;
+      }
+    }
+    stateClose();
+  }
     function testSeparate3(jobid, url ,num, time_id){
     var xhr = new XMLHttpRequest();
     xhr.open('POST', url);
     xhr.onreadystatechange = function(){
       if(xhr.readyState === 4 && xhr.status === 200) {
         var temp = xhr.responseText;
-        document.querySelector('#state'+num).innerHTML = temp;
+        var state = document.querySelector('#state'+num);
+        state.innerHTML=temp;
         doneConfirm[time_id] = new CustomAlert();
         if(temp.match('done')) {
           clearInterval(time_id);
         }
         if(temp.match('StopVM')) {
           doneConfirm[time_id].render('Server','서버 종료가 완료 되었습니다.','default');
+          state.innerHTML = ' 서버 종료가 완료 되었습니다.';
         } else if(temp.match('DeployVM')){
           doneConfirm[time_id].render('Server','서버 생성이 완료 되었습니다.','default');
+          state.innerHTML = ' 서버 생성이 완료 되었습니다.';
         } else if(temp.match('RebootVM')){
           doneConfirm[time_id].render('Server','서버 재시작이 완료 되었습니다.','default');
+          state.innerHTML = ' 서버 재시작이 완료 되었습니다.';
         } else if(temp.match('StartVM')) {
           doneConfirm[time_id].render('Server','서버 시작이 완료 되었습니다.','default');
+          state.innerHTML = ' 서버 시작이 완료 되었습니다.';
         } else if(temp.match('ResetVMPassword')) {
           doneConfirm[time_id].render('Server','서버 비밀번호 재생성이 완료 되었습니다.','default');
+          state.innerHTML = ' 서버 비밀번호 재생성이 완료 되었습니다.';
+        } else if(temp.match('DestroyVM')) {
+          doneConfirm[time_id].render('Server','서버 삭제가 완료 되었습니다.','default');
+          if(location.href.match('myServer.php')) {
+            sleep(1);
+            renewPage();
+          }
+          state.innerHTML = ' 서버 삭제가 완료 되었습니다.'; 
         }  // disk
         else if(temp.match('CreateVolume')) {
           doneConfirm[time_id].render('volume','Disk 생성이 완료 되었습니다.','default');
+          state.innerHTML = ' Disk 생성이 완료 되었습니다.'; 
         } else if(temp.match('AttachVolume')) {
           doneConfirm[time_id].render('volume','Disk 와 서버 연결이 완료 되었습니다.','default');
+          state.innerHTML = ' Disk 와 서버 연결이 완료 되었습니다.'; 
         } else if(temp.match('DetachVolume')) {
           doneConfirm[time_id].render('volume','Disk 와 서버 연결 해제가 완료 되었습니다.','default');
+          state.innerHTML = ' Disk 와 서버 연결 해제가 완료 되었습니다.'; 
         } //ip
         else if(temp.match('AssociateIPAddr')) {
           doneConfirm[time_id].render('IP','IP 생성이 완료 되었습니다.','default');
+          state.innerHTML = ' IP 생성이 완료 되었습니다.'; 
         } else if(temp.match('DisassociateIPAddr')) {
           doneConfirm[time_id].render('IP','IP 삭제가 완료 되었습니다.','default');
+          state.innerHTML = ' IP 삭제가 완료 되었습니다.'; 
         } //portForwarding
         else if(temp.match('CreatePortForwardingRule')) {
           doneConfirm[time_id].render('Port Forwarding','port forwarding 생성이 완료 되었습니다.','default');
+          state.innerHTML = ' port forwarding 생성이 완료 되었습니다.'; 
         } else if(temp.match('DeletePortForwardingRule')) {
           doneConfirm[time_id].render('Port Forwarding','port forwarding 삭제가 완료 되었습니다.','default');
+          state.innerHTML = ' port forwarding 삭제가 완료 되었습니다.'; 
         }  //firewall
         else if(temp.match('CreateFirewallRule')) {
           doneConfirm[time_id].render('Fire Wall','방화벽 규칙 생성이 완료 되었습니다.','default');
+          state.innerHTML = ' 방화벽 규칙 생성이 완료 되었습니다.'; 
         } else if(temp.match('DeleteFirewallRule')) {
           doneConfirm[time_id].render('Fire Wall','방화벽 규칙 삭제가 완료 되었습니다.','default');
+          state.innerHTML = ' 방화벽 규칙 삭제가 완료 되었습니다.'; 
         } 
         
       }
@@ -114,9 +152,7 @@ include_once($server_root_path.'/'.CLOUD_PATH.'customAlert/customAlert.html');
     xhr.send(data);
     
   }
-    
-    var span_start=2;
-    var span_end=1;
+
     var timeid = new Array();
   </script>
     
@@ -132,19 +168,13 @@ include_once($server_root_path.'/'.CLOUD_PATH.'customAlert/customAlert.html');
           foreach($_SESSION['processID'] as $key => $value ) {
             $timeID++;
             ?>
-            <p><?=$_SESSION['processID'][$key]?> :<span id="state<?= $key ?>"></span></p>
+            <p><?=$key?> :<span id="state<?= $key ?>"></span></p>
             <script>
-      <?php if($timeID==1) { ?>
-              span_start = <?= $key?>;
-      <?php } ?>
-            span_end =  <?= $key?>  ;
               timeid[<?=$timeID?>] = setInterval("testSeparate3('<?= $_SESSION['processID'][$key] ?>','/<?=CLOUD_PATH?>include/asynchronousPart.php','<?= $key ?>', timeid[<?=$timeID?>])", 3000);
            
             </script>
 <?php 
-
-          }
-          
+          }    
         } 
 ?>
 

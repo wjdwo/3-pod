@@ -29,6 +29,7 @@ $jobRank=$_POST['jobRank'];
   
   $jobStatus = $result2["jobstatus"];
   if ($jobStatus == 2) {
+    echo $result2['cmd'];
     echo "done : work fail!<br/>";
     unset($_SESSION['processID'][$jobRank]);
 
@@ -51,6 +52,6 @@ $jobRank=$_POST['jobRank'];
     echo " done!";
   }
   else {
-    echo "working now...<img height='17px' src='/".CLOUD_PATH."include/load.gif'>";
+    echo "<img height='17px' src='/".CLOUD_PATH."include/load.gif'>";
   }
 ?>
