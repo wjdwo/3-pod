@@ -76,3 +76,17 @@ function viewPassword(t){
       }
     document.getElementById('serverState').style.display = 'table';
   }
+/*
+  function renewPage(){
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET','renewMyServer.php');
+    xhr.send();
+    xhr.onreadystatechange = function(){
+      if(xhr.readyState === 4 && xhr.status === 200) {
+       // alert(xhr.responseText);
+        document.querySelector('#myVM').innerHTML = xhr.responseText;
+      }
+    }
+    stateClose();
+  }
+  */

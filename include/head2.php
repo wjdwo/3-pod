@@ -85,57 +85,61 @@ include_once($server_root_path.'/'.CLOUD_PATH.'customAlert/customAlert.html');
         var state = document.querySelector('#state'+num);
         var head = '';
         var body = '';
+        var my_location = location.href;
 
         state.innerHTML=temp;
+      //  alert(temp);
         doneConfirm[time_id] = new CustomAlert();
         if(temp.match('done')) {
           clearInterval(time_id);
         }
-        if(temp.match('StopVM')) {
-          head = 'Server'; body = ' 서버 종료가 완료 되었습니다.';
-        } else if(temp.match('DeployVM')){
-          head = 'Server'; body = ' 서버 생성이 완료 되었습니다.';
-        } else if(temp.match('RebootVM')){
-          head = 'Server'; body = ' 서버 재시작이 완료 되었습니다.';
-        } else if(temp.match('StartVM')) {
-          head = 'Server'; body = ' 서버 시작이 완료 되었습니다.';
-        } else if(temp.match('ResetVMPassword')) {
-          head = 'Server'; body = ' 서버 비밀번호 재생성이 완료 되었습니다.';
-        } else if(temp.match('DestroyVM')) {
+        if(temp.match('DestroyVM') == 'DestroyVM') {
+        //  alert('vm destroy!'); 
           head = 'Server'; body = ' 서버 삭제가 완료 되었습니다.';
-          if(location.href.match('myServer.php')) {
-            sleep(1);
+          if(my_location.match('myServer.php') == 'myServer.php') {
+          //  sleep(3);
             renewPage();
           }
+        } else if(temp.match('StopVM') == 'StopVM') {
+          head = 'Server'; body = ' 서버 종료가 완료 되었습니다.';
+        } else if(temp.match('DeployVM') == 'DeployVM') {
+          head = 'Server'; body = ' 서버 생성이 완료 되었습니다.';
+        } else if(temp.match('RebootVM') == 'RebootVM') {
+          head = 'Server'; body = ' 서버 재시작이 완료 되었습니다.';
+        } else if(temp.match('StartVM') == 'StartVM') {
+          head = 'Server'; body = ' 서버 시작이 완료 되었습니다.';
+        } else if(temp.match('ResetVMPassword') == 'ResetVMPassword') {
+          head = 'Server'; body = ' 서버 비밀번호 재생성이 완료 되었습니다.';
         }  // disk
-        else if(temp.match('CreateVolume')) {
+        else if(temp.match('CreateVolume') == 'CreateVolume') {
           head = 'Volume'; body = ' Disk 생성이 완료 되었습니다.';
-        } else if(temp.match('AttachVolume')) {
+        } else if(temp.match('AttachVolume') == 'AttachVolume') {
           head = 'Volume'; body = ' Disk 와 서버 연결이 완료 되었습니다.';
-        } else if(temp.match('DetachVolume')) {
+        } else if(temp.match('DetachVolume') == 'DetachVolume') {
           head = 'Volume'; body = ' Disk 와 서버 연결 해제가 완료 되었습니다.';
         } //ip
-        else if(temp.match('AssociateIPAddr')) {
+        else if(temp.match('AssociateIPAddr') == 'AssociateIPAddr') {
           head = 'IP'; body = ' IP 생성이 완료 되었습니다.';
-        } else if(temp.match('DisassociateIPAddr')) {
+        } else if(temp.match('DisassociateIPAddr') == 'DisassociateIPAddr') {
           head = 'IP'; body = ' IP 삭제가 완료 되었습니다.';
         } //portForwarding
-        else if(temp.match('CreatePortForwardingRule')) {
+        else if(temp.match('CreatePortForwardingRule') == 'CreatePortForwardingRule') {
           head = 'Port Forwarding'; body = ' port forwarding 생성이 완료 되었습니다.';
-        } else if(temp.match('DeletePortForwardingRule')) {
+        } else if(temp.match('DeletePortForwardingRule') == 'DeletePortForwardingRule') {
           head = 'Port Forwarding'; body = ' port forwarding 삭제가 완료 되었습니다.';
         }  //firewall
-        else if(temp.match('CreateFirewallRule')) {
+        else if(temp.match('CreateFirewallRule') == 'CreateFirewallRule') {
           head = 'Fire Wall'; body = ' 방화벽 규칙 생성이 완료 되었습니다.';
-        } else if(temp.match('DeleteFirewallRule')) {
+        } else if(temp.match('DeleteFirewallRule') == 'DeleteFirewallRule') {
           head = 'Fire Wall'; body = ' 방화벽 규칙 삭제가 완료 되었습니다.';
         } 
-        if(temp.match('fail')){
+        if(temp.match('fail') == 'fail'){
           body = ' 오류가 발생했습니다.';
         }
-        state.innerHTML = body;
-        doneConfirm[time_id].render(head,body,'default');
-        
+        if(head != '') {
+          state.innerHTML = body;
+          doneConfirm[time_id].render(head,body,'default');
+        }
       }
     }
     xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");

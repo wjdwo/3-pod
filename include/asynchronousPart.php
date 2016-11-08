@@ -42,12 +42,13 @@ $jobRank=$_POST['jobRank'];
       $_SESSION[$id] = $password;
       echo "password produce";
     }
-
+/*
     if(isset($result2['jobresult']['virtualmachine']['state'])){
       if($result2['jobresult']['virtualmachine']['state'] == "Destroyed") {
         echo VM_DESTROY;
       }
     }
+*/
     unset($_SESSION['processID'][$jobRank]);
     echo " done!";
   }

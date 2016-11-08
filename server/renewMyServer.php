@@ -9,7 +9,7 @@ include_once($server_root_path.'/'.CLOUD_PATH.'pageInclude/ajaxCalledPageInclude
 <?php
 
 $URL = "https://api.ucloudbiz.olleh.com/server/v1/client/api?";
-//sleep(1);
+sleep(1);
 $listProductcmdArr = array(
     "command" => "listVirtualMachines",
     "apikey" => API_KEY
@@ -26,9 +26,13 @@ for($i=0; $i<$result_num; $i++){
   }else {
     $temp = $result;
   }
+  if($temp['state']=='Destroyed'){
+    continue;
+  }
   echo "<tr><td class='view' onmouseover = 'viewPassword(this)' onmouseout='hiddenPassword(this)' onclick='showVMState(this)'>";
   echo $temp['displayname'];
   echo "</td> <td>";
+  echo "<input id='".$temp['displayname']."_id' type='hidden' value='".$temp['id']."'/>";
   echo $temp['zonename'];
   echo "</td> <td>";
   echo $temp['serviceofferingname'];
