@@ -26,7 +26,7 @@ $cmdArr = array(
 
 $result = callCommand($URL, $cmdArr, SECERET_KEY);
 $result = $result['account'];
-
+//var_dump($result);
 $cmdArr = array(
   "command" => "listVolumes",
   "apikey" => API_KEY
@@ -35,6 +35,7 @@ $result2 = callCommand($URL_NAS, $cmdArr, SECERET_KEY);
 $result2_num = $result2['count'];
 $online_num = 0;
 $result2 = $result2['response'];
+
 for($i=0; $i<$result2_num; $i++){
   if($result2_num == 1){
     $temp2 = $result2;
@@ -43,7 +44,29 @@ for($i=0; $i<$result2_num; $i++){
   }
   if($temp2['status']=='online')
     $online_num++;
-}?>
+}
+
+
+
+ $cmdArr = array (
+    "command" => "listVolumes",
+    "apikey" => API_KEY
+ );
+ $result3 = callCommand($URL, $cmdArr, SECERET_KEY);
+
+ $result3_num = $result3['count'];
+$result3 = $result3['volume'];
+ $volume_num = 0;
+for($i=0; $i<$result3_num; $i++){ 
+   if($result3_num != '1' ) {
+     $temp = $result3[$i];
+  }else {
+     $temp = $result3;
+  }
+  if($temp['destroyed']=='false') $volume_num++;
+}
+
+?>
 <table class="fifty_left gray_line">
 <tr class="background_gray"><td colspan="2"><b>Server</b></td></tr>
 <tr>
@@ -55,7 +78,7 @@ for($i=0; $i<$result2_num; $i++){
 </tr>
 
 <tr>
-<td>Disk 갯수</td> <td><?=$result['volumetotal']?></td>
+<td>Disk 갯수</td> <td><?=$volume_num?></td>
 </tr>
 
 </table>

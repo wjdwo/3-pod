@@ -164,7 +164,6 @@ include_once($server_root_path.'/'.CLOUD_PATH.'customAlert/customAlert.html');
             <p><?=$key?> :<span id="state<?= $key ?>"></span></p>
             <script>
               timeid[<?=$timeID?>] = setInterval("testSeparate3('<?= $_SESSION['processID'][$key] ?>','/<?=CLOUD_PATH?>include/asynchronousPart.php','<?= $key ?>', timeid[<?=$timeID?>])", 3000);
-           
             </script>
 <?php 
           }    
