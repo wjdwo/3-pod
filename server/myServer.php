@@ -30,7 +30,7 @@ $listProductcmdArr = array(
     "apikey" => API_KEY
 );
 $result = callCommand($URL, $listProductcmdArr, SECERET_KEY);
-//var_dump_enter($result);
+
 $result_num = $result['count'];
 $result = $result['virtualmachine'];
 

@@ -87,7 +87,6 @@ for($i=0; $i<$result_num; $i++){
     "apikey" => API_KEY
 );
 $vmList = callCommand($URL, $listVMcmdArr, SECERET_KEY);
-//var_dump_enter($vmList);
 
 $vm_num = $vmList['count'];
 $vm = $vmList['virtualmachine'];

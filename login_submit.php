@@ -13,7 +13,7 @@ include_once($server_root_path.'/'.CLOUD_PATH.'customAlert/customAlert.html');
 	Alert.render('Log In','잠시만 기다려 주세요...','');
 </script>
 <?php
-//var_dump($_POST);
+
 if($_POST['id']!=ID){
 	echo "<script>Confirm.render('Log In','존재하지 않는 ID 입니다.',loca,'','no')</script>";
 	exit;

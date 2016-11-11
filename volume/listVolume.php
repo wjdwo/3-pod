@@ -105,6 +105,7 @@ for($i=0; $i<$num; $i++){
   <td > <script>makeByteToGB('<?=$temp['size']?>');</script>  </td>
   <td><?=$temp['created']?></td>
   </tr>
+  
  <?php  
  }
 ?>

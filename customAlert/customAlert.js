@@ -2,15 +2,8 @@ function CustomAlert(){
     var result;
     this.render = function(head,dialog,foot){
         result = false;
-        var winW = window.innerWidth;
-        var winH = window.innerHeight;
-        var dialogoverlay = document.getElementById('dialogoverlay');
-        var dialogbox = document.getElementById('dialogbox');
-        dialogoverlay.style.display = "block";
-        dialogoverlay.style.height = winH+"px";
-        dialogbox.style.left = (winW/2) - (550 * .5)+"px";
-        dialogbox.style.top = "100px";
-        dialogbox.style.display = "block";
+        setAlertPosition();
+        window.addEventListener("resize",setAlertPosition);
         document.getElementById('dialogboxhead').innerHTML = head;
         document.getElementById('dialogboxbody').innerHTML = dialog;
         if(foot=='default'){
@@ -24,37 +17,105 @@ function CustomAlert(){
         document.getElementById('dialogbox').style.display = "none";
         document.getElementById('dialogoverlay').style.display = "none";
     }
-}
-var Alert = new CustomAlert();
-
-function CustomAlert2(){
-    var result;
-    this.render = function(head,dialog,foot){
-        result = false;
+    function setAlertPosition() {
         var winW = window.innerWidth;
         var winH = window.innerHeight;
-        var dialogoverlay = document.getElementById('dialogoverlay2');
-        var dialogbox = document.getElementById('dialogbox2');
+        var dialogoverlay = document.getElementById('dialogoverlay');
+        var dialogbox = document.getElementById('dialogbox');
         dialogoverlay.style.display = "block";
         dialogoverlay.style.height = winH+"px";
+
         dialogbox.style.left = (winW/2) - (550 * .5)+"px";
         dialogbox.style.top = "100px";
         dialogbox.style.display = "block";
-        document.getElementById('dialogboxhead2').innerHTML = head;
-        document.getElementById('dialogboxbody2').innerHTML = dialog;
-        if(foot=='default'){
-            document.getElementById('dialogboxfoot2').innerHTML = '<button class="button2" onclick="Alert2.ok()">OK</button>';
-        } else {
-            document.getElementById('dialogboxfoot2').innerHTML = foot;
-        }
-
-    }
-    this.ok = function(){
-        document.getElementById('dialogbox2').style.display = "none";
-        document.getElementById('dialogoverlay2').style.display = "none";
     }
 }
-var Alert2 = new CustomAlert2();
+var Alert = new CustomAlert();
+
+function asyAlerter(){
+    var result;
+    var dialogoverlay;
+    var dialogbox;
+    var div;
+    var dialogboxhead;
+    var dialogboxbody;
+    var dialogboxfoot;
+    var button;
+
+    this.render = function(obj_var, head,dialog,foot){
+        result = false;
+        makeAlertView();
+        setAlertPosition();
+        window.addEventListener("resize",setAlertPosition);
+
+        dialogboxhead.innerHTML = head;
+        dialogboxbody.innerHTML = dialog;
+        if(foot=='default'){
+            makeButton(obj_var);
+            dialogboxfoot.appendChild(button);
+        } 
+    }
+
+    this.ok = function(){
+        deleteAlertView();
+    }
+
+
+    function makeAlertView() {
+        dialogoverlay = document.createElement('div');
+        dialogbox = document.createElement('div');
+        div = document.createElement('div');
+        dialogboxhead = document.createElement('div');
+        dialogboxbody = document.createElement('div');
+        dialogboxfoot = document.createElement('div');
+
+        dialogoverlay.setAttribute('class', 'dialogoverlay');
+        dialogbox.setAttribute('class', 'dialogbox');
+        dialogboxhead.setAttribute('class', 'dialogboxhead');
+        dialogboxbody.setAttribute('class', 'dialogboxbody');
+        dialogboxfoot.setAttribute('class', 'dialogboxfoot');
+
+        div.appendChild(dialogboxhead);
+        div.appendChild(dialogboxbody);
+        div.appendChild(dialogboxfoot);
+        dialogbox.appendChild(div);
+        
+        document.body.appendChild(dialogoverlay);
+        document.body.appendChild(dialogbox);
+    }
+
+    function setAlertPosition() {
+        var winW = window.innerWidth;
+        var winH = window.innerHeight;
+        dialogoverlay.style.display = "block";
+        dialogoverlay.style.height = winH+"px";
+
+        dialogbox.style.left = (winW/2) - (550 * .5)+"px";
+        dialogbox.style.top = "100px";
+        dialogbox.style.display = "block";
+    }
+
+    function makeButton(obj_var) {
+        button = document.createElement('button');
+        button.setAttribute('class','button2');
+        button.setAttribute('onclick', obj_var+".ok()");
+        button.innerHTML = "OK";
+    }
+
+    
+    function deleteAlertView() {
+        
+    //    dialogboxfoot.removeChild(button);
+    //    div.removeChild(dialogboxhead);
+    //    div.removeChild(dialogboxbody);
+    //    div.removeChild(dialogboxfoot);
+    //    dialogbox.removeChild(div);
+        
+        dialogoverlay.parentNode.removeChild(dialogbox);
+        dialogoverlay.parentNode.removeChild(dialogoverlay);
+    }
+    
+}
 
 function deletePost(id){
     var db_id = id.replace("post_", "");
@@ -66,19 +127,10 @@ function CustomConfirm(){
     var anyFunction;
     var parameters;
     this.render = function(head,dialog,func,par,no){
-     //   alert(func);
         anyFunction = func;
-    //    alert("anyFunc : "+this.anyFunction);
         parameters = par;
-        var winW = window.innerWidth;
-        var winH = window.innerHeight;
-        var dialogoverlay = document.getElementById('dialogoverlay');
-        var dialogbox = document.getElementById('dialogbox');
-        dialogoverlay.style.display = "block";
-        dialogoverlay.style.height = winH+"px";
-        dialogbox.style.left = (winW/2) - (550 * .5)+"px";
-        dialogbox.style.top = "100px";
-        dialogbox.style.display = "block";
+        setAlertPosition();
+        window.addEventListener("resize",setAlertPosition);
         
         document.getElementById('dialogboxhead').innerHTML = head;
         document.getElementById('dialogboxbody').innerHTML = dialog;
@@ -94,32 +146,32 @@ function CustomConfirm(){
         anyFunction=''; parameters='';
     }
     this.yes = function(){
-    //    alert(this.anyFunction);
         anyFunction(parameters); //익명의 함수.
         anyFunction=''; parameters='';
         document.getElementById('dialogbox').style.display = "none";
         document.getElementById('dialogoverlay').style.display = "none";
     }
-}
-var Confirm = new CustomConfirm();
-
-function CustomConfirm2(){
-  //  var anyFunction;
-    var parameters;
-    this.render = function(head,dialog,func,par,no){
-     //   alert(func);
-     //   anyFunction = func;
-    //    alert("anyFunc : "+this.anyFunction);
-        parameters = par;
+    function setAlertPosition() {
         var winW = window.innerWidth;
         var winH = window.innerHeight;
         var dialogoverlay = document.getElementById('dialogoverlay');
         var dialogbox = document.getElementById('dialogbox');
         dialogoverlay.style.display = "block";
         dialogoverlay.style.height = winH+"px";
+
         dialogbox.style.left = (winW/2) - (550 * .5)+"px";
         dialogbox.style.top = "100px";
         dialogbox.style.display = "block";
+    }
+}
+var Confirm = new CustomConfirm();
+/*
+function CustomConfirm2(){
+    var parameters;
+    this.render = function(head,dialog,func,par,no){
+        parameters = par;
+        setAlertPosition();
+        window.addEventListener("resize",setAlertPosition);
         
         document.getElementById('dialogboxhead').innerHTML = head;
         document.getElementById('dialogboxbody').innerHTML = dialog;
@@ -143,21 +195,27 @@ function CustomConfirm2(){
         document.getElementById('dialogbox').style.display = "none";
         document.getElementById('dialogoverlay').style.display = "none";
     }
-}
-
-function CustomPrompt(){
-    var parameters;
-    this.render = function(head,dialog,type,func,para){
-        parameters = para;
+    function setAlertPosition() {
         var winW = window.innerWidth;
         var winH = window.innerHeight;
         var dialogoverlay = document.getElementById('dialogoverlay');
-        var dialogbox = document.getElementById('dialogbox')
+        var dialogbox = document.getElementById('dialogbox');
         dialogoverlay.style.display = "block";
         dialogoverlay.style.height = winH+"px";
+
         dialogbox.style.left = (winW/2) - (550 * .5)+"px";
         dialogbox.style.top = "100px";
         dialogbox.style.display = "block";
+    }
+}
+*/
+function CustomPrompt(){
+    var parameters;
+    this.render = function(head,dialog,type,func,para) {
+        parameters = para;
+        setAlertPosition();
+        window.addEventListener("resize",setAlertPosition);
+
         document.getElementById('dialogboxhead').innerHTML = head;
         document.getElementById('dialogboxbody').innerHTML = dialog;
         document.getElementById('dialogboxbody').innerHTML += '<input type="'+type+'" class="transparent" id="prompt_value1">';
@@ -176,6 +234,19 @@ function CustomPrompt(){
             document.getElementById('dialogoverlay').style.display = "none";
         }
         parameters='';
+    }
+
+    function setAlertPosition() {
+        var winW = window.innerWidth;
+        var winH = window.innerHeight;
+        var dialogoverlay = document.getElementById('dialogoverlay');
+        var dialogbox = document.getElementById('dialogbox');
+        dialogoverlay.style.display = "block";
+        dialogoverlay.style.height = winH+"px";
+
+        dialogbox.style.left = (winW/2) - (550 * .5)+"px";
+        dialogbox.style.top = "100px";
+        dialogbox.style.display = "block";
     }
 }
 var Prompt = new CustomPrompt();

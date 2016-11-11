@@ -9,7 +9,7 @@ include_once($server_root_path.'/'.CLOUD_PATH.'include/api_constants.php');
 include_once($server_root_path.'/'.CLOUD_PATH.'include/callAPI.php'); 
 
 
-$jobRank=$_POST['jobRank'];
+  $jobRank=$_POST['jobRank'];
   $cmdArr2 = array(
     "command" => "queryAsyncJobResult",
     "jobid" => $_POST['jobid'],
@@ -48,19 +48,9 @@ $jobRank=$_POST['jobRank'];
     if(isset($result2['jobresult']['volume']['name'])) {
       echo "<diskname>".$result2['jobresult']['volume']['name']."<diskname>";
     }
-    /*
-    if(isset($result2['jobResult']['firewallrule']['protocol'])){
-      echo "<firewall>".$result2['jobResult']['firewallrule']['cidrlist']." : ".$result2['jobResult']['firewallrule']['protocol']." 시작 포트 (".$result2['jobResult']['firewallrule']['startport'].") 끝 포트(".$result2['jobResult']['firewallrule']['endport'].")";
-    }
 
-    if(isset($result2['jobresult']['virtualmachine']['state'])){
-      if($result2['jobresult']['virtualmachine']['state'] == "Destroyed") {
-        echo VM_DESTROY;
-      }
-    }
-*/
     unset($_SESSION['processID'][$jobRank]);
-    echo " done!";
+    echo " done";
   }
   else {
     echo "<img height='17px' src='/".CLOUD_PATH."include/load.gif'>";

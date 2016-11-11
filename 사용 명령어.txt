@@ -1,0 +1,48 @@
+1. VM 명령어
+[listVirtualMachines]
+[checkVirtualMachineName]
+[deployVirtualMachine]
+[destroyVirtualMachine]
+[rebootVirtualMachine]
+[stopVirtualMachine]
+[startVirtualMachine]
+[resetPasswordForVirtualMachine]
+
+2. Volume 명령어
+[listVolumes]
+[createVolume]
+[deleteVolume]
+[attachVolume]
+[detachVolume]
+
+1. Portforwarding 명령어
+[listPublicIpAddresses]
+[createPortForwardingRule]
+[deletePortForwardingRule]
+[listPortForwardingRules]
+[createFirewallRule]
+[deleteFirewallRule]
+[listFirewallRules]
+
+2. NAS 명령어
+[addVolume] : 볼륨 추가 생성시 사용
+[updateVolume] : 정보 수정
+[deleteVolume] : 볼륨 삭제
+
+[listVolumes] : 현재 볼륨조회
+
+---니가 해야 하는것----
+CIP에 연결된 VM 추가하기 기능 +  VM 나열하기 기능
+
+[listAccountForNas] : 사용자 그룹 조회에 필요함.
+[updateAccountForNas] : 사용자 그룹 명 변경하는데 필요.
+//그룹명 안바꿀꺼야 싯팔 ㅠ
+[listCifsAccounts] : CIFS 아이디의 목록을 조회한다.
+//하나만 조회 한다.
+<listcifsaccountsresponse>
+<response>cifsAccountwjdwowjdwo</response>
+<status>success</status>
+<totalcount>2</totalcount>
+</listcifsaccountsresponse>
+
+[updateCifsAccount] : CIFS ID,PW 변경 //이 개새끼야

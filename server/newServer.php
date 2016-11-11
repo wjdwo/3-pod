@@ -40,6 +40,7 @@ function checkDisplayName() {
         window.open("serverNameCheckSubmit.php?server_name="+dis,'','left=300, top=300, width=400, height=300, toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, copyhistory=no, resizable=no');
     }
 }
+
 function submitForm(){
     var form = document.getElementById('sendform');
     if(form.displayname.readOnly != true){

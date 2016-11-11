@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src='customAlert.js'></script>
+<script>
+	var alert = new CustomAlert3();
+</script>
+<link rel="stylesheet" type="text/css" href="customAlert.css">
+</head>
+<body>
+	<input type=button value='test' onclick='alert.render("alert","hi","hello","default")'>
+	<input type=button value='test' onclick='Alert.render("hi","hello","default")'>
+
+<div id="dialogoverlay"></div>
+<div id="dialogbox">
+  <div>
+    <div id="dialogboxhead"></div>
+    <div id="dialogboxbody"></div>
+    <div id="dialogboxfoot"></div>
+  </div>
+</div>	
+</body>
+</html>

@@ -3,8 +3,6 @@
 include_once($server_root_path.'/'.CLOUD_PATH.'include/api_constants.php');
 include_once($server_root_path.'/'.CLOUD_PATH.'login_certify.php');
 include_once($server_root_path.'/'.CLOUD_PATH.'customAlert/customAlert.html');
-
-
 ?>
 
 <link rel="stylesheet" type="text/css" href="/<?=CLOUD_PATH?>include/design.css">
@@ -58,139 +56,9 @@ include_once($server_root_path.'/'.CLOUD_PATH.'customAlert/customAlert.html');
 <input type="checkbox" id="paneltoggle" />
 <label for="paneltoggle" title="Click to open Panel"></label>
 <div class="content">
-  <script>
 
-//  var doneConfirm = new Array();
-  function stateClose(id){
-    document.getElementById(id).style.display="none";
-  }
-  function renewPage(){
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET','renewMyServer.php');
-    xhr.send();
-    xhr.onreadystatechange = function(){
-      if(xhr.readyState === 4 && xhr.status === 200) {
-       // alert(xhr.responseText);
-        document.querySelector('#myVM').innerHTML = xhr.responseText;
-      }
-    }
-    stateClose('serverState');
-  }
-    function testSeparate3(jobid, url ,num, time_id){
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', url);
-    xhr.onreadystatechange = function(){
-      if(xhr.readyState === 4 && xhr.status === 200) {
-        var temp = xhr.responseText;
-        var state = document.querySelector('#state'+num);
-        var head = '';
-        var body = '';
-        var my_location = location.href;
-
-        state.innerHTML=temp;
-
-        if(temp.match('done')) {
-          clearInterval(time_id);
-        }
-        if(temp.match('VM')) {
-          head = 'Server';
-          var res = temp.split('<displayname>');
-          body = res[1];
-        }
-        else if(temp.match('Volume')){
-          head = 'Volume';
-          var res = temp.split('<diskname>');
-          body = res[1];
-        }
-
-        if(temp.match('DestroyVM')){
-          head = 'Server'; body += ' 서버 삭제가 완료 되었습니다.';
-          if(my_location.match('myServer.php') == 'myServer.php') {
-            renewPage();
-          }
-        } else if(temp.match('StopVM')) {
-          head = 'Server'; body += ' 종료가 완료 되었습니다.';
-        } else if(temp.match('DeployVM')) {
-          head = 'Server'; body += ' 생성이 완료 되었습니다.';
-        } else if(temp.match('RebootVM')) {
-          head = 'Server'; body += ' 재시작이 완료 되었습니다.';
-        } else if(temp.match('StartVM')) {
-          head = 'Server'; body += ' 시작이 완료 되었습니다.';
-        } else if(temp.match('ResetVMPassword')) {
-          head = 'Server'; body += ' 비밀번호 재생성이 완료 되었습니다.';
-        }  // disk
-        else if(temp.match('CreateVolume')) {
-          head = 'Volume'; body += ' 생성이 완료 되었습니다.';
-        } else if(temp.match('AttachVolume')) {
-          head = 'Volume'; body += ' 와 서버 연결이 완료 되었습니다.';
-        } else if(temp.match('DetachVolume')) {
-          head = 'Volume'; body += ' 와 서버 연결 해제가 완료 되었습니다.';
-        } //ip
-        else if(temp.match('AssociateIPAddr')) {
-          head = 'IP'; body = ' IP 생성이 완료 되었습니다.';
-        } else if(temp.match('DisassociateIPAddr')) {
-          head = 'IP'; body = ' IP 삭제가 완료 되었습니다.';
-        } //portForwarding
-        else if(temp.match('CreatePortForwardingRule')) {
-          head = 'Port Forwarding'; body = ' port forwarding 생성이 완료 되었습니다.';
-
-        } else if(temp.match('DeletePortForwardingRule')) {
-          head = 'Port Forwarding'; body = ' port forwarding 삭제가 완료 되었습니다.';
-        }  //firewall
-        else if(temp.match('CreateFirewallRule')) {
-          head = 'Fire Wall'; body = ' 방화벽 규칙 생성이 완료 되었습니다.';
-        } else if(temp.match('DeleteFirewallRule')) {
-          head = 'Fire Wall'; body = ' 방화벽 규칙 삭제가 완료 되었습니다.';
-        } 
-        else if (temp.match('AddNicToVM')) {
-          head = 'CIP'; body = 'CIP와 서버 연결이 완료 되었습니다.';
-        } else if (temp.match('RemoveNicFromVM')) {
-          head = 'CIP'; body = 'CIP와 서버 연결 해제가 완료 되었습니다.';
-        }
-        if(temp.match('fail')) {
-          body = ' 오류가 발생했습니다.';
-        }
-
-
-        if (head.match('Port Forwarding')) {
-          if(my_location.match('listPublicIP.php')){
-            stateClose('stateViewer');
-          }
-        } else if(head.match('Fire Wall')) {
-          if(my_location.match('listFireWallRules.php')){
-            stateClose('stateViewer');
-          }
-        } else if(head.match('Server')) {
-          if(my_location.match('myServer.php')){
-            stateClose('serverState');
-          }
-        } else if(head.match('Volume')) {
-          if(my_location.match('listVolume.php')){
-            stateClose('diskState');
-          }
-        } else if(head.match('CIP')) {
-          if(my_location.match('listNAS.php')){
-            stateClose('NASList');
-            stateClose('NASState');
-          }
-        }
-        if(head != '') {
-          state.innerHTML = body;
-          Alert2.render(head, body, 'default');
-        }
-      }
-    }
-    xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-    var data = '';
-    data += "jobid="+jobid;
-    data += "&jobRank="+num;
-    xhr.send(data);
-    
-  }
-
-    var timeid = new Array();
-  </script>
-    
+<script src='/<?=CLOUD_PATH?>include/asy.js'>
+</script>   
 <?php
         if(!isset($_SESSION['processID'])){
            echo "<p><span>요청 하신 작업이 없습니다.</span></p>";
@@ -200,14 +68,19 @@ include_once($server_root_path.'/'.CLOUD_PATH.'customAlert/customAlert.html');
         }
         else if(count($_SESSION['processID'])!=0){ 
           $timeID=0; 
+          echo "<script>var timeid = new Array(); var asyCheck = new Array(); var asyAlert = new Array(); </script>";
           foreach($_SESSION['processID'] as $key => $value ) {
-            $timeID++;
+            
             ?>
             <p><?=$key?> :<span id="state<?= $key ?>"></span></p>
             <script>
-              timeid[<?=$timeID?>] = setInterval("testSeparate3('<?= $_SESSION['processID'][$key] ?>','/<?=CLOUD_PATH?>include/asynchronousPart.php','<?= $key ?>', timeid[<?=$timeID?>])", 3000);
+            asyAlert[<?=$timeID?>] = new asyAlerter();
+            asyCheck[<?=$timeID?>] = new asyChecker(asyAlert[<?=$timeID?>]);
+            timeid[<?=$timeID?>] = setInterval("asyCheck[<?=$timeID?>].checkAsyCmdState('<?= $_SESSION['processID'][$key] ?>','/<?=CLOUD_PATH?>include/asynchronousPart.php','<?= $key ?>', timeid[<?=$timeID?>])", 3000);
             </script>
 <?php 
+
+            $timeID++;
           }    
         } 
 ?>

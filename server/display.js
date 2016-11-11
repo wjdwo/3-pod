@@ -72,10 +72,13 @@ function display(my_id,type){
 
             var temp_text = xhr.responseText;
             var option_array = temp_text.split("<option>");
+       //     alert(option_array);
 
             if(type=="diskofferingid"){
+
                 var disk_id = option_array[1];
-                document.getElementById('diskofferingid').options[0].value=disk_id;
+            //    alert(disk_id);
+                document.getElementById('diskofferingid').options[0].value= disk_id;
                 return true;
             }
 
@@ -85,10 +88,12 @@ function display(my_id,type){
             var opt = document.createElement("OPTION");
         
             if(type=="templateid" || type=="serviceofferingid" ){
+                alert('???');
                 for( i=1; i<option_array.length; i = i + 2 ){
                     var opt = document.createElement("OPTION");
                     opt.setAttribute("value", option_array[i+1]);
-                    opt.label = option_array[i];
+//                    opt.label = option_array[i];
+                    opt.innerHTML = option_array[i];
                     input_id.add(opt);
                 }
                 return true;    
@@ -96,7 +101,9 @@ function display(my_id,type){
             for( i=1; i<option_array.length; i++){
                 var opt = document.createElement("OPTION");
                 opt.setAttribute("value", option_array[i]);
-                opt.label = option_array[i];
+            //    opt.label = option_array[i];
+                opt.innerHTML = option_array[i];
+
                 input_id.add(opt);
             }
 

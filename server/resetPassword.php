@@ -1,7 +1,5 @@
 <?php
 @session_start();
-//echo "sesssion_start";
-//exit;
 $server_root_path = $_SERVER['DOCUMENT_ROOT'];
 include_once($server_root_path.'/includeFiles.php');
 ?>
@@ -30,13 +28,10 @@ $cmdArr = array(
     "id" => $_POST['id'],
     "apikey" => API_KEY
 );
-//var_dump_enter($stopcmdArr);
 $seceret_key = SECERET_KEY;
-//exit;
 $result = callCommand($URL, $cmdArr, $seceret_key);
 set_time_limit(600);
 $jobId = $result["jobid"];
-//echo $jobId;
 
 
 

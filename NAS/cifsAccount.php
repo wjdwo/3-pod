@@ -52,7 +52,6 @@ $cmdArr = array(
 $result = callCommandJSON($URL_NAS, $cmdArr, SECERET_KEY);
 
 $result = $result['listcifsaccountsresponse'];
-//exit;
 
 $cmdArr = array(
   "command" => "listAccountForNas",
